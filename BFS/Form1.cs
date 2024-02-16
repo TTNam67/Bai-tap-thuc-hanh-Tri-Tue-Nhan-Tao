@@ -113,7 +113,14 @@ namespace BFS
 
         private void btnTim_Click(object sender, EventArgs e)
         {
-            _breathFS.Solve();
+            if (_breathFS.Solve() == true)
+            {
+                MessageBox.Show("Đã tìm được đường đi");
+            }
+            else
+            {
+                MessageBox.Show("Không tìm được đường đi");
+            }
 
 
             string filePath = "../../../Exportfile.txt"; // Replace with desired path and filename
