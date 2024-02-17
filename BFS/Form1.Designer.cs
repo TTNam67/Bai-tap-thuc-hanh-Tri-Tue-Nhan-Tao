@@ -50,7 +50,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.grbChucNang = new System.Windows.Forms.GroupBox();
-            this.btnSave = new System.Windows.Forms.Button();
             this.btnTim = new System.Windows.Forms.Button();
             this.btnVe = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
@@ -255,7 +254,6 @@
             // 
             // grbChucNang
             // 
-            this.grbChucNang.Controls.Add(this.btnSave);
             this.grbChucNang.Controls.Add(this.btnTim);
             this.grbChucNang.Controls.Add(this.btnVe);
             this.grbChucNang.Controls.Add(this.btnImport);
@@ -265,15 +263,6 @@
             this.grbChucNang.TabIndex = 1;
             this.grbChucNang.TabStop = false;
             this.grbChucNang.Text = "Chức năng";
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(6, 115);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(124, 25);
-            this.btnSave.TabIndex = 3;
-            this.btnSave.Text = "Save file";
-            this.btnSave.UseVisualStyleBackColor = true;
             // 
             // btnTim
             // 
@@ -331,7 +320,7 @@
             this.btnBFDko.Name = "btnBFDko";
             this.btnBFDko.Size = new System.Drawing.Size(137, 25);
             this.btnBFDko.TabIndex = 4;
-            this.btnBFDko.Text = "BFD không trọng số";
+            this.btnBFDko.Text = "Breath First Search";
             this.btnBFDko.UseVisualStyleBackColor = true;
             this.btnBFDko.Click += new System.EventHandler(this.btnBFDko_Click);
             // 
@@ -341,7 +330,7 @@
             this.btnBFDco.Name = "btnBFDco";
             this.btnBFDco.Size = new System.Drawing.Size(137, 26);
             this.btnBFDco.TabIndex = 5;
-            this.btnBFDco.Text = "BFD có trọng số";
+            this.btnBFDco.Text = "Best First Search";
             this.btnBFDco.UseVisualStyleBackColor = true;
             this.btnBFDco.Click += new System.EventHandler(this.btnBFDco_Click);
             // 
@@ -421,7 +410,6 @@
         private System.Windows.Forms.Label label1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.GroupBox grbChucNang;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnVe;
         private System.Windows.Forms.Button btnTim;

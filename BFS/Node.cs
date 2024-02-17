@@ -21,6 +21,8 @@ namespace BFS
         public bool Visited { get; set; } = false;
         public string Name { get => _name; set => _name = value; }
 
+        
+
         public string ListNeighborsToString()
         {
             string ans = "";
@@ -30,9 +32,30 @@ namespace BFS
                 ans += ", ";
             }
 
-            ans = ans.Substring(0, ans.Length - 2);
+            if (ans.Length > 2)
+                ans = ans.Substring(0, ans.Length - 2);
 
             return ans;
+        }
+    }
+
+    public class MyComparor :  IComparer<Node>
+    {
+        int IComparer<Node>.Compare(Node x, Node y)
+        {
+            if (x.Value > y.Value)
+            {
+                return 1;
+            }
+            else if (x.Value < y.Value)
+            {
+                return -1;
+            }
+            else
+            {
+                // Handle ties if necessary (e.g., by Name)
+                return x.Name.CompareTo(y.Name);
+            }
         }
     }
 }

@@ -11,9 +11,18 @@ using System.Windows.Forms;
 
 namespace BFS
 {
+    public enum Algorithm
+    {
+        BreathFirstSearch,
+        BestFirstSearch
+    }
+
     public partial class Form1 : Form
     {
         BreathFirstSearch _breathFS;
+        BestFirstSearch _bestFS;
+        Algorithm _algorithm;
+
         public Form1()
         {
             InitializeComponent();
@@ -47,6 +56,7 @@ namespace BFS
             ptbCoTrongSO.Visible = false;
             btnADD.Enabled = true;
             grbChucNang.Visible = true;
+            _algorithm = Algorithm.BreathFirstSearch;
         }
 
         private void btnBFDco_Click(object sender, EventArgs e)
@@ -64,6 +74,7 @@ namespace BFS
             ptbCoTrongSO.Visible = true;
             btnADD.Enabled = true;
             grbChucNang.Visible = true;
+            _algorithm = Algorithm.BestFirstSearch;
         }
 
         private void btnImport_Click(object sender, EventArgs e)
@@ -81,13 +92,17 @@ namespace BFS
                         textBox1.Text = fileContent; // Display the content in a TextBox named "textBox1"
 
                         string[] strings = fileContent.Split(new string[] {"\n"}, StringSplitOptions.None);
-                        _breathFS = new BreathFirstSearch(strings);
-                        
 
-                        // Do something with the file content based on your purpose:
-                        // - Display in a TextBox: textBox1.Text = fileContent;
-                        // - Process the text
-                        // - Store in a database
+                        if (_algorithm == Algorithm.BreathFirstSearch)
+                        {
+                            _breathFS = new BreathFirstSearch(strings);
+
+                        }
+                        else if (_algorithm == Algorithm.BestFirstSearch)
+                        {
+                            _bestFS = new BestFirstSearch(strings);
+                        }
+
                     }
                 }
             }
@@ -113,23 +128,50 @@ namespace BFS
 
         private void btnTim_Click(object sender, EventArgs e)
         {
-            if (_breathFS.Solve() == true)
-            {
-                MessageBox.Show("Đã tìm được đường đi");
-            }
-            else
-            {
-                MessageBox.Show("Không tìm được đường đi");
-            }
-
-
             string filePath = "../../../Exportfile.txt"; // Replace with desired path and filename
+
+            if (_algorithm == Algorithm.BreathFirstSearch)
+            {
+                if (_breathFS.Solve() == true)
+                {
+                    MessageBox.Show("Đã tìm được đường đi, kết quả được lưu trong file Exportfile.txt");
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm được đường đi");
+                }
+
+
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    writer.WriteLine(_breathFS.stringToExport); // Write the data to the file
+                }
+            }
+            else if (_algorithm == Algorithm.BestFirstSearch)
+            {
+                if (_bestFS.Solve() == true)
+                {
+                    MessageBox.Show("Đã tìm được đường đi, kết quả được lưu trong file Exportfile.txt");
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm được đường đi");
+                }
+
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    writer.WriteLine(_bestFS.stringToExport); // Write the data to the file
+                }
+            }
+
+
             
 
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                writer.WriteLine(_breathFS.stringToExport); // Write the data to the file
-            }
+
+            
+            
+
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -141,5 +183,6 @@ namespace BFS
         {
 
         }
+
     }
 }

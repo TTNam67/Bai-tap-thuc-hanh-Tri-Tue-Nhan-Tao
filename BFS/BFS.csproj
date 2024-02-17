@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BestFirstSearch.cs" />
     <Compile Include="BreathFirstSearch.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Form1.cs">
