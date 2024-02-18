@@ -144,6 +144,9 @@ namespace BFS
                     stringToExport += string.Concat(Enumerable.Repeat(' ', numOfDash - 12));
                     stringToExport += $"|{spacePerCell}|\n";
                     stringToExport += $"+{dashPerCell}+{dashPerCell}+{dashPerCell}+\n";
+
+
+                    RetrieveThePath();
                     return true;
                 }
 
@@ -195,7 +198,12 @@ namespace BFS
             return false;
         }
 
+        public void RetrieveThePath()
+        {
 
+        }
 
     }
+
+    
 }

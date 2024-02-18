@@ -19,9 +19,14 @@ namespace BFS
 
         //Store the: {vertex name - its index in _nodeList}
         Dictionary<string, int> mapVertices = new Dictionary<string, int>();
+        Dictionary<string, int> _mapRankVertices = new Dictionary<string, int>();
+        int _rankID = 0;
 
-        List<string> path = new List<string>();
+        //Stores the visited node 
+        List<string> _visited = new List<string>();
         public string stringToExport;
+
+        
 
         public BestFirstSearch(string[] data)
         {
@@ -43,6 +48,10 @@ namespace BFS
 
                 //The current vertex: A
                 node.Name = strings[0];
+                if (!_mapRankVertices.ContainsKey(node.Name))
+                {
+                    _mapRankVertices.Add(node.Name, _rankID);
+                }
 
                 //Add all the neighbor vertices into a list: C D E
                 List<string> neighbors = new List<string>();
@@ -50,7 +59,12 @@ namespace BFS
                 for (int j = 1; j < strings.Length; j++)
                 {
                     neighbors.Add(strings[j]);
-
+                    if (!_mapRankVertices.ContainsKey(strings[j]))
+                    {
+                        Console.WriteLine($"dinh do: {strings[j]}, va gia tri: {_mapRankVertices[node.Name] + 1}");
+                        _mapRankVertices.Add(strings[j], _mapRankVertices[node.Name] + 1);
+                    }
+                        
                 }
 
                 //Save "all the neighbor vertices" in the "current vertex"
@@ -78,6 +92,7 @@ namespace BFS
         {
             data = data.Substring(0, data.Length - 1);
             string[] nameList = data.Split(new string[] { " " }, StringSplitOptions.None);
+
             foreach (string name in nameList)
             {
                 Console.WriteLine($"{name}: {_id}"); ;
@@ -129,6 +144,7 @@ namespace BFS
             while (q.Count > 0)
             {
                 string curr = q[0];
+                _visited.Add(curr);
                 q.RemoveAt(0);
 
                 // Thêm thông tin về trạng thái hiện tại 
@@ -143,6 +159,13 @@ namespace BFS
                     stringToExport += string.Concat(Enumerable.Repeat(' ', numOfDash - 12));
                     stringToExport += $"|{spacePerCell}|\n";
                     stringToExport += $"+{dashPerCell}+{dashPerCell}+{dashPerCell}+\n";
+
+                    foreach(string a in _visited)
+                    {
+                        Console.Write($"{a}, ");
+                    }
+
+                    RetrieveThePath();
                     return true;
                 }
 
@@ -200,6 +223,37 @@ namespace BFS
             }
 
             return false;
+        }
+
+        public void RetrieveThePath()
+        {
+            int id = 0;
+            int rankID = _mapRankVertices[_visited[_visited.Count - 1]];
+            Console.WriteLine("rankid: " + rankID);
+            List<string> lst = new List<string>();
+            string ans = "";
+
+            for (int i = (_visited.Count - 1); i >= 0 ; i--)
+            {
+                Console.WriteLine($"{_visited[i]}: {_mapRankVertices[_visited[i]]}: RAnk {rankID}");
+                if (_mapRankVertices[_visited[i]] == rankID)
+                {
+                    
+                    
+                    
+                    lst.Add(_visited[i] );
+                    rankID--;
+                }
+            }
+            ans += "A";
+
+            lst.Reverse();
+            for (int i = 1; i < lst.Count; i++)
+            {
+                ans += $" -> {lst[i]}";
+            }
+            stringToExport += ans;
+
         }
     }
 }
