@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +26,8 @@ namespace BFS
         //Stores the visited node 
         List<string> _visited = new List<string>();
         public string stringToExport;
+        List<string> path = new List<string>();
 
-        
 
         public BestFirstSearch(string[] data)
         {
@@ -138,6 +139,8 @@ namespace BFS
 
             bool[] visited = new bool[n];
             List <string> q = new List <string>();
+            Dictionary<string, string> parent = new Dictionary<string, string>();
+
             q.Add(_startP);
             visited[mapVertices[_startP]] = true;
 
@@ -165,7 +168,7 @@ namespace BFS
                         Console.Write($"{a}, ");
                     }
 
-                    RetrieveThePath();
+                    RetrieveThePath(parent);
                     return true;
                 }
 
@@ -179,6 +182,7 @@ namespace BFS
                         q.Add(vertex);
                         Console.WriteLine($"{curr}: {vertex}");
                         visited[mapVertices[vertex]] = true;
+                        parent[vertex] = curr; // Store the parent of vertex
                     }
                 }
 
@@ -225,7 +229,7 @@ namespace BFS
             return false;
         }
 
-        public void RetrieveThePath()
+        /*public void RetrieveThePath()
         {
             int id = 0;
             int rankID = _mapRankVertices[_visited[_visited.Count - 1]];
@@ -254,6 +258,28 @@ namespace BFS
             }
             stringToExport += ans;
 
+        }*/
+
+        public void RetrieveThePath(Dictionary<string, string> parent)
+        {
+            string current = _endP;
+            while (current != _startP)
+            {
+                path.Add(current);
+                current = parent[current];
+            }
+            path.Add(_startP);
+            path.Reverse(); // Reverse the path to get it from start to end
+
+            string pathString = "";
+            foreach (string i in path)
+            {
+                pathString += $"{i} -> ";
+            }
+
+            pathString = pathString.Substring(0, pathString.Length - 3);
+
+            stringToExport += pathString;
         }
     }
 }

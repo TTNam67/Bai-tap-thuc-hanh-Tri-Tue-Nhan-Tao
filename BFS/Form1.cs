@@ -184,5 +184,10 @@ namespace BFS
 
         }
 
-    }
+		private void btnHuongDan_Click(object sender, EventArgs e)
+		{
+            HuongDan huongDan = new HuongDan();
+            huongDan.Show();
+		}
+	}
 }

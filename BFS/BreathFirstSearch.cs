@@ -24,13 +24,13 @@ namespace BFS
 
         public BreathFirstSearch(string[] data)
         {
-            
+
             n = int.Parse(data[0]); //number of vertices
 
             PreDefineMap(data[1]); // Define for the map that contains: <vertices name> : <its id>
             k = int.Parse(data[2]); //number of edges
 
-            for (int i = 3; i < (3 + n); i++) 
+            for (int i = 3; i < (3 + n); i++)
             {
 
                 Node node = new Node();
@@ -44,14 +44,14 @@ namespace BFS
 
                 //The current vertex: A
                 node.Name = strings[0];
-                
-                 //Add all the neighbor vertices into a list: C D E
+
+                //Add all the neighbor vertices into a list: C D E
                 List<string> neighbors = new List<string>();
 
-                for (int j = 1; j < strings.Length; j++) 
+                for (int j = 1; j < strings.Length; j++)
                 {
                     neighbors.Add(strings[j]);
-                    
+
                 }
 
                 //Save "all the neighbor vertices" in the "current vertex"
@@ -94,18 +94,18 @@ namespace BFS
             stringToExport += $"+{dashPerCell}+{dashPerCell}+{dashPerCell}+\n";
 
             stringToExport += "+";
-            stringToExport += string.Concat(Enumerable.Repeat(' ', (numOfDash - TrangThaiPhatTrien.Length)/2));
+            stringToExport += string.Concat(Enumerable.Repeat(' ', (numOfDash - TrangThaiPhatTrien.Length) / 2));
             stringToExport += TrangThaiPhatTrien;
             stringToExport += string.Concat(Enumerable.Repeat(' ', (numOfDash - TrangThaiPhatTrien.Length) / 2));
             stringToExport += "+";
 
-           
+
             stringToExport += string.Concat(Enumerable.Repeat(' ', (numOfDash - TrangThaiKe.Length) / 2));
             stringToExport += TrangThaiKe;
             stringToExport += string.Concat(Enumerable.Repeat(' ', (numOfDash - TrangThaiKe.Length) / 2));
             stringToExport += "+";
 
-           
+
             stringToExport += string.Concat(Enumerable.Repeat(' ', (numOfDash - DanhSachL.Length) / 2));
             stringToExport += DanhSachL;
             stringToExport += string.Concat(Enumerable.Repeat(' ', (numOfDash - DanhSachL.Length) / 2));
@@ -119,16 +119,17 @@ namespace BFS
 
             bool[] visited = new bool[n];
             Queue<string> q = new Queue<string>();
+            // Parent dictionary to store the parent of each node during BFS
+            Dictionary<string, string> parent = new Dictionary<string, string>();
 
-            
 
             q.Enqueue(_startP);
             visited[mapVertices[_startP]] = true;
-            
+
 
             while (q.Count > 0)
             {
-               
+
                 string curr = q.Dequeue();
                 Console.WriteLine($"curr: {curr}");
 
@@ -146,20 +147,21 @@ namespace BFS
                     stringToExport += $"+{dashPerCell}+{dashPerCell}+{dashPerCell}+\n";
 
 
-                    RetrieveThePath();
+                    RetrieveThePath(parent);
                     return true;
                 }
 
 
                 string adjacentList = "| ";
 
-                foreach (string vertex in _nodeList[mapVertices[curr]].Neighbors) 
+                foreach (string vertex in _nodeList[mapVertices[curr]].Neighbors)
                 {
                     if (visited[mapVertices[vertex]] == false)
                     {
                         //Success
                         q.Enqueue(vertex);
                         visited[mapVertices[vertex]] = true;
+                        parent[vertex] = curr; // Store the parent of vertex
                     }
                 }
 
@@ -198,12 +200,29 @@ namespace BFS
             return false;
         }
 
-        public void RetrieveThePath()
+        public void RetrieveThePath(Dictionary<string, string> parent)
         {
+            string current = _endP;
+            while (current != _startP)
+            {
+                path.Add(current);
+                current = parent[current];
+            }
+            path.Add(_startP);
+            path.Reverse(); // Reverse the path to get it from start to end
 
+            string pathString = "";
+            foreach (string i in path)
+            {
+                pathString += $"{i} -> ";
+            }
+
+            pathString = pathString.Substring(0, pathString.Length - 3);
+
+            stringToExport += pathString;
         }
 
     }
 
-    
+
 }
