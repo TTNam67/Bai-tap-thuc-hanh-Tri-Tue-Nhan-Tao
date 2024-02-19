@@ -145,6 +145,7 @@ namespace BFS
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
                     writer.WriteLine(_breathFS.stringToExport); // Write the data to the file
+                    _breathFS.stringToExport = "";
                 }
             }
             else if (_algorithm == Algorithm.BestFirstSearch)
@@ -161,6 +162,7 @@ namespace BFS
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
                     writer.WriteLine(_bestFS.stringToExport); // Write the data to the file
+                    _bestFS.stringToExport = "";
                 }
             }
 
