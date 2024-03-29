@@ -31,7 +31,7 @@ namespace BFS
                 ans += neighbor.ToString();
                 ans += ", ";
             }
-
+            
             if (ans.Length > 2)
                 ans = ans.Substring(0, ans.Length - 2);
 

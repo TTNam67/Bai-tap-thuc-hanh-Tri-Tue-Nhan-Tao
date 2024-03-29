@@ -132,38 +132,52 @@ namespace BFS
 
             if (_algorithm == Algorithm.BreathFirstSearch)
             {
-                if (_breathFS.Solve() == true)
+                if(_breathFS != null)
                 {
-                    MessageBox.Show("Đã tìm được đường đi, kết quả được lưu trong file Exportfile.txt");
-                }
+					if (_breathFS.Solve() == true)
+					{
+						MessageBox.Show("Đã tìm được đường đi, kết quả được lưu trong file Exportfile.txt");
+					}
+					else
+					{
+						MessageBox.Show("Không tìm được đường đi");
+					}
+
+					using (StreamWriter writer = new StreamWriter(filePath))
+					{
+						writer.WriteLine(_breathFS.stringToExport); // Write the data to the file
+						_breathFS.stringToExport = "";
+					}
+				}
                 else
                 {
-                    MessageBox.Show("Không tìm được đường đi");
-                }
+					MessageBox.Show("Vui lòng import file");
+				}
 
-
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    writer.WriteLine(_breathFS.stringToExport); // Write the data to the file
-                    _breathFS.stringToExport = "";
-                }
             }
             else if (_algorithm == Algorithm.BestFirstSearch)
             {
-                if (_bestFS.Solve() == true)
+               if(_bestFS != null)
                 {
-                    MessageBox.Show("Đã tìm được đường đi, kết quả được lưu trong file Exportfile.txt");
-                }
+					if (_bestFS.Solve() == true)
+					{
+						MessageBox.Show("Đã tìm được đường đi, kết quả được lưu trong file Exportfile.txt");
+					}
+					else
+					{
+						MessageBox.Show("Không tìm được đường đi");
+					}
+
+					using (StreamWriter writer = new StreamWriter(filePath))
+					{
+						writer.WriteLine(_bestFS.stringToExport); // Write the data to the file
+						_bestFS.stringToExport = "";
+					}
+				}
                 else
                 {
-                    MessageBox.Show("Không tìm được đường đi");
-                }
-
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    writer.WriteLine(_bestFS.stringToExport); // Write the data to the file
-                    _bestFS.stringToExport = "";
-                }
+					MessageBox.Show("Vui lòng import file");
+				}
             }
 
 
